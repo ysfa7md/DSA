@@ -220,7 +220,7 @@ class LinkedList():
 
     def clear(self):
         while not self.is_empty():
-            self.delete_tail()
+            self.delete_head()
 
 
 

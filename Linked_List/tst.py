@@ -1,4 +1,4 @@
-from linked_list import LinkedList
+from Linked_List.linked_list import LinkedList
 
 l=LinkedList(4)
 
