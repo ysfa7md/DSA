@@ -1,15 +1,14 @@
 class Node:
-    def __init__(self,val):
-        self.val=val
+    def __init__(self,value):
+        self.val=value
         self.next=None
 
 
 class LinkedList():
-    def __init__(self, val):
-        node=Node(val)
-        self.head=node
-        self.tail=node
-        self.size=1
+    def __init__(self):
+        self.head=None
+        self.tail=None
+        self.size=0
 
     def inc_size(self):
         self.size+=1
@@ -26,40 +25,57 @@ class LinkedList():
         return ptr
 
     def insert_at_head(self,value):
-        new=Node(value)
-        new.next=self.head
-        self.head=new
+        node=Node(value)
+
+        if self.head is None:
+            self.head=node
+            self.tail=self.head
+            self.inc_size()
+            return
+
+        node.next=self.head
+        self.head=node
         self.inc_size()
 
     def insert_at_tail(self, value):
-        new = Node(value)
-
+        node = Node(value)
         if self.tail is None:
-            self.head = new
-            self.tail = new
-        else:
-            self.tail.next = new
-            self.tail = new
+            self.tail=node
+            self.head=self.tail
+            self.inc_size()
+            return
+
+        self.tail.next = node
+        self.tail = node
         self.inc_size()
 
 
     def insert_at_index(self,index, value):
+        if self.head is None or index==self.size:
+            self.insert_at_tail(value)
+            return
+
         if index> self.size:
-            return -1
+            raise IndexError("Index out of bounds")
 
         node=Node(value)
         ptr=self.head
         if index == 0:
             self.insert_at_head(value)
             return
-        for _ in range(index-1):
-            ptr=ptr.next
+
+        ptr=self.go_to(index-1)
+
         ptr2=ptr.next
         ptr.next=node
         node.next=ptr2
+
         self.inc_size()
 
     def delete_head(self):
+        if self.head is None:
+            raise Exception("List is empty")
+
         _head=self.head
 
         if self.tail==self.head:
@@ -72,33 +88,37 @@ class LinkedList():
         del(_head)
 
     def delete_tail(self):
+        if self.tail is None:
+            raise Exception("List is empty")
+
         _tail=self.tail
-        crnt=self.head
+        ptr=self.head
 
         if self.tail==self.head:
             self.head=None
             self.tail=None
         else:
-            for _ in range(self.size-2):
-                crnt=crnt.next
-            self.tail=crnt
+            ptr=self.go_to(self.size-2)
+            self.tail=ptr
             self.tail.next=None
         self.dec_size()
         del(_tail)
 
 
     def delete_at_index(self,index):
+        if self.head is None:
+            raise Exception("List is empty")
 
-        if index>= self.size:
-            return -1
+        if index >= self.size:
+            raise IndexError("Index out of bounds")
 
         ptr=self.head
+
         if index == 0:
             self.delete_head()
             return
 
-        for _ in range(index-1):
-            ptr=ptr.next
+        ptr=self.go_to(index-1)
 
         ptr2=ptr.next
         ptr3=ptr2.next
@@ -111,14 +131,12 @@ class LinkedList():
         ptr=self.head
         i=0
 
-        while True:
+        while ptr:
             if ptr.val== value:
                 return i
             i+=1
-            if ptr.next:
-                ptr=ptr.next
-            else:
-                return -1
+            ptr=ptr.next
+        return -1 # not found
 
     def get_length(self):
         return self.size
@@ -222,7 +240,46 @@ class LinkedList():
         while not self.is_empty():
             self.delete_head()
 
+# Magic Methods
 
+    def __len__(self):
+        return self.size
 
+    def __getitem__(self,index):
+        if index>=self.size:
+            raise IndexError("Index out of bounds")
+        ptr=self.go_to(index)
+        return ptr.val
 
+    def __setitem__(self,index,value):
+        if index>=self.size:
+            raise IndexError("Index out of bounds")
+        ptr=self.go_to(index)
+        ptr.val=value
 
+    def __delitem__(self,index):
+        if index>=self.size:
+            raise IndexError("Index out of bounds")
+        self.delete_at_index(index)
+
+    def __iter__(self):
+        ptr=self.head
+        while ptr:
+            yield ptr.val
+            ptr=ptr.next
+
+    def __repr__(self):
+        arr=self.to_array()
+        return "LinkedList([" + ", ".join(str(x) for x in arr) + "])"
+
+    def __str__(self):
+        arr=self.to_array()
+        return "->".join(str(x) for x in arr) + "->None"
+
+    def __contains__(self,value):
+        ptr=self.head
+        while ptr:
+            if ptr.val== value:
+                return True
+            ptr=ptr.next
+        return False
