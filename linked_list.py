@@ -11,7 +11,6 @@ class LinkedList():
         self.tail=node
         self.size=1
 
-
     def inc_size(self):
         self.size+=1
 
@@ -19,6 +18,12 @@ class LinkedList():
         if self.size<1:
             return "list is empty"
         self.size-=1
+
+    def go_to(self,index):
+        ptr=self.head
+        for i in range(index):
+            ptr=ptr.next
+        return ptr
 
     def insert_at_head(self,value):
         new=Node(value)
@@ -29,18 +34,30 @@ class LinkedList():
     def insert_at_tail(self, value):
         new = Node(value)
 
-        if self.tail is None:        # empty list
+        if self.tail is None:
             self.head = new
             self.tail = new
-        else:                        # non-empty list
+        else:
             self.tail.next = new
             self.tail = new
         self.inc_size()
 
 
     def insert_at_index(self,index, value):
+        if index> self.size:
+            return -1
+
+        node=Node(value)
+        ptr=self.head
+        if index == 0:
+            self.insert_at_head(value)
+            return
+        for _ in range(index-1):
+            ptr=ptr.next
+        ptr2=ptr.next
+        ptr.next=node
+        node.next=ptr2
         self.inc_size()
-        pass
 
     def delete_head(self):
         _head=self.head
@@ -71,8 +88,24 @@ class LinkedList():
 
 
     def delete_at_index(self,index):
+
+        if index>= self.size:
+            return -1
+
+        ptr=self.head
+        if index == 0:
+            self.delete_head()
+            return
+
+        for _ in range(index-1):
+            ptr=ptr.next
+
+        ptr2=ptr.next
+        ptr3=ptr2.next
+        ptr.next=ptr3
+
+        del(ptr3)
         self.dec_size()
-        pass
 
     def search(self,value):
         ptr=self.head
@@ -116,16 +149,74 @@ class LinkedList():
         # print(arr)
 
     def reverse(self):
-        pass
+        crnt=self.head
+        prev=None
+
+        self.head=self.tail
+
+        while crnt :
+            nxt=crnt.next
+            crnt.next=prev
+            prev=crnt
+            crnt=nxt
+
+        self.tail=prev
+
+    # def find_middle(self):
+    #     pass
 
     def find_middle(self):
-        pass
+        slow = self.head
+        fast = self.head
+
+        while fast and fast.next:
+            slow = slow.next
+            fast = fast.next.next
+        print("slow: ",slow.val)
+        print("fast: ",fast.val)
+        return slow
+
+    def make_cycle(self):
+        if not self.head:
+            return
+
+        self.tail.next = self.head   # cycle created
+
+    def make_cycle_at(self,frm,to):
+        if not self.head:
+            return
+        ptr_from=self.go_to(frm)
+        ptr_to=self.go_to(to)
+
+        ptr_from.next=ptr_to
 
     def detect_cycle(self):
-        pass
+        slow = self.head
+        fast = self.head
+
+        while fast and fast.next:
+            slow = slow.next
+            fast = fast.next.next
+
+            if slow == fast:
+                return True
+
+        return False
+
 
     def remove_duplicates(self):
-        pass
+        _set=set()
+        ptr=self.head
+        i=0
+        while ptr:
+            if ptr.val in _set:
+                self.delete_at_index(i)
+                i-=1
+            else:
+                _set.add(ptr.val)
+
+            ptr=ptr.next
+            i+=1
 
     def clear(self):
         while not self.is_empty():
