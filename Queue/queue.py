@@ -42,17 +42,22 @@ class Queue():
 
         return top
 
-    def __len__(self):
-        return self.size
-
     def to_arr(self):
         top=self.start
         arr=[]
         while top:
             arr.append(top.val)
             top=top.next
-
         return arr
+
+    def __len__(self):
+        return self.size
+
+    def __iter__(self):
+        top=self.start
+        while top:
+            yield top.val
+            top=top.next
 
     def __repr__(self):
         arr = self.to_arr()
