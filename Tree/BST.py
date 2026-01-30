@@ -12,15 +12,43 @@ class Tree():
 
     def insert(self, value):
         node=Node(value)
-        if self.root:
+        if self.root is None:
+            self.root=node
+        else:
             ptr=self.root
-            if value < ptr.val:
-                if ptr.left:
-                    ...
+            while ptr:
+                if value == ptr.val:
+                    return
+
+                if value > ptr.val:
+                    ptr=ptr.right
+
+                else:   # if value < ptr.val:
+                    ptr=ptr.left
+
+            if ptr <value:
+                ptr.right = node
+            else:
+                ptr.left = node
+
+
 
 
     def search(self, value):
-        pass
+        if self.root is None:
+            raise ValueError("Tree is empty")
+
+        ptr=self.root
+        while ptr:
+            if value == ptr.val:
+                return True
+
+            if value > ptr.val:
+                ptr=ptr.right
+            else:   # if value < ptr.val:
+                ptr=ptr.left
+        else:
+            return False
 
     def delete(self):
         pass
@@ -37,11 +65,17 @@ class Tree():
     def level_order_BFS(self):
         pass
 
-    def findMin(self):
-        pass
+    def find_min(self):
+        ptr=self.root
+        while ptr.left:
+            ptr=ptr.left
+        return ptr.val
 
-    def findMax(self):
-        pass
+    def find_max(self):
+        ptr=self.root
+        while ptr.right:
+            ptr=ptr.right
+        return ptr.val
 
     def successor(self):
         pass
@@ -59,9 +93,6 @@ class Tree():
         pass
 
     def height(self):
-        pass
-
-    def depth(self):
         pass
 
     def clear(self):
