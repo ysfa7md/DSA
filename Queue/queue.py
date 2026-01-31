@@ -42,6 +42,11 @@ class Queue():
 
         return top
 
+    def top(self):
+        if self.start is Node:
+            raise Exception("Queue is empty")
+        return self.start
+
     def to_arr(self):
         top=self.start
         arr=[]

@@ -29,10 +29,15 @@ class Stack():
     def pop(self):
         _top=self.top
         if _top is None:
-            raise Exception("Srack is empty!")
+            raise Exception("Stack is empty!")
         self.top=self.top.next
         self.dec_size()
         return _top
+
+    def top(self):
+        if self.top is None:
+            raise Exception("Stack is empty!")
+        return self.top
 
     def to_arr(self):
         _top=self.top
