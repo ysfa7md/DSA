@@ -90,11 +90,14 @@ class HashMap:
 
 def main():
     hm = HashMap(32)
+    
     hm.put(4, 6)
     hm.put(5, 2)
     hm.put(3, 6)
+
     print(hm.get(4))
     print(hm.get(5))
+
     print(hm.contains_key(5))
     print(hm.contains_key(1))
     print(hm.contains_value(5))
