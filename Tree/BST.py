@@ -1,81 +1,142 @@
 class Node:
-    def __init__(self,value):
-        self.right=None
-        self.left=None
-        self.val=value
+    def __init__(self, value):
+        self.right = None
+        self.left = None
+        self.val = value
 
 
-class Tree():
-    def __init__(self,value):
-        self.root=Node(value)
-
+class Tree:
+    def __init__(self, value):
+        self.root = Node(value)
+        self.size=0
 
     def insert(self, value):
-        node=Node(value)
+        node = Node(value)
+
         if self.root is None:
-            self.root=node
-        else:
-            ptr=self.root
-            while ptr:
-                if value == ptr.val:
-                    return
+            self.root = node
+            return
 
-                if value > ptr.val:
-                    ptr=ptr.right
+        ptr = self.root
+        while ptr:
+            if value == ptr.val:
+                return
 
-                else:   # if value < ptr.val:
-                    ptr=ptr.left
-
-            if ptr <value:
-                ptr.right = node
+            if value > ptr.val:
+                ptr = ptr.right
             else:
-                ptr.left = node
+                ptr = ptr.left
 
+        if ptr < value:
+            ptr.right = node
+        else:
+            ptr.left = node
 
+        self.size+=1
 
+    def _search(self, node, target):
+        if not node:
+            return
+
+        if node.val == target:
+            return node
+
+        elif node.val < target:
+            self._search(node.right, target)
+        else:
+            self._search(node.left, target)
 
     def search(self, value):
         if self.root is None:
             raise ValueError("Tree is empty")
 
-        ptr=self.root
-        while ptr:
-            if value == ptr.val:
-                return True
+        return self._search(self.root, value)
+        # ptr = self.root
+        # while ptr:
+        #     if value == ptr.val:
+        #         return True
 
-            if value > ptr.val:
-                ptr=ptr.right
-            else:   # if value < ptr.val:
-                ptr=ptr.left
-        else:
-            return False
+        #     if value > ptr.val:
+        #         ptr = ptr.right
+        #     else:  # if value < ptr.val:
+        #         ptr = ptr.left
 
-    def delete(self):
-        pass
+        # return False
+    # TODo :-
+    def delete(self,value):
+        root=self.root
+        if not root:
+            return ValueError("Tree is empty")
 
-    def inorderTraversal(self):
-        pass
+        # case 1 val is the root
+        if not (root.left or root.right):
+            del root
 
-    def PreorderTraversal(self):
-        pass
+        if not
 
-    def PostorderTraversal(self):
-        pass
+    # ====================
+    # helper functions
+    # ====================
+    values = list()
 
-    def level_order_BFS(self):
-        pass
+    def _in_order(self, node):
+        if not node:
+            return
+
+        self._in_order(node.left)
+        self.values.append(node.val)
+        self._in_order(node.right)
+
+    def _pre_order(self, node):
+        if not node:
+            return
+
+        self.values.append(node.val)
+        self._pre_order(node.left)
+        self._pre_order(node.right)
+
+    def _post_order(self, node):
+        if not node:
+            return
+
+        self._post_order(node.left)
+        self._post_order(node.right)
+        self.values.append(node.val)
+    # ====================
+
+    def in_order_traversal(self):
+        values = []
+        root = self.root
+        self._in_order(root)
+        return self.values
+
+    def pre_order_traversal(self):
+        values = []
+        root = self.root
+        self._pre_order(root)
+        return self.values
+
+    def post_order_traversal(self):
+        values = []
+        root = self.root
+        self._post_order(root)
+        return self.values
+    # ====================
 
     def find_min(self):
-        ptr=self.root
+        ptr = self.root
         while ptr.left:
-            ptr=ptr.left
+            ptr = ptr.left
         return ptr.val
 
     def find_max(self):
-        ptr=self.root
+        ptr = self.root
         while ptr.right:
-            ptr=ptr.right
+            ptr = ptr.right
         return ptr.val
+
+    def level_order_BFS(self):
+        pass
 
     def successor(self):
         pass
@@ -101,4 +162,8 @@ class Tree():
     def destroy_tree(self):
         pass
 
+    def __repr__(self):
+        return f'BST({self.in_order_traversal()})'
 
+    def __str__(self):
+        return f'{self.in_order_traversal()}'
