@@ -44,8 +44,36 @@ class Sort:
             # n-=1
 
     @staticmethod
-    def merge_sort():
-        pass
+    def merg(arr, start, mid, end):
+        i = 0
+        j = 0
+        left = arr[start : mid + 1]
+        right = arr[mid + 1 : end + 1]
+
+        len_left = len(left)
+        len_right = len(right)
+
+        while i < len_left and j < len_right:
+            if left[i] < right[j]:
+                arr[start + i + j] = left[i]
+                i += 1
+            else:
+                arr[start + i + j] = right[j]
+                j += 1
+        curr_idx = start + i + j
+
+        if i < len_left:
+            arr[curr_idx : curr_idx + len(left[i:])] = left[i:]
+        if j < len_right:
+            arr[curr_idx : curr_idx + len(right[j:])] = right[j:]
+
+    @staticmethod
+    def merg_sort(arr, start, end):
+        if start < end:
+            mid = start + (end - start) // 2
+            Sort.merg_sort(arr, start, mid)
+            Sort.merg_sort(arr, mid + 1, end)
+            Sort.merg(arr, start, mid, end)
 
     # helper function
     def _part(arr, low, high):
@@ -68,58 +96,3 @@ class Sort:
     @staticmethod
     def heap_sort():
         pass
-
-    @staticmethod
-    def shell_sort():
-        pass
-
-    @staticmethod
-    def tree_sort():
-        pass
-
-    @staticmethod
-    def cycle_sort():
-        pass
-
-    @staticmethod
-    def comb_sort():
-        pass
-
-    @staticmethod
-    def cocktail_shaker_sort():
-        pass
-
-    @staticmethod
-    def gnome_sort():
-        pass
-
-    @staticmethod
-    def odd_Even_sort():
-        pass
-
-    @staticmethod
-    def pancake_sort():
-        pass
-
-    @staticmethod
-    def strand_sort():
-        pass
-
-    @staticmethod
-    def bitonic_sort():
-        pass
-
-    @staticmethod
-    def smooth_sort():
-        pass
-
-    @staticmethod
-    def intro_sort():
-        pass
-
-    @staticmethod
-    def tim_sort():
-        pass
-
-
-# Batcher’s Odd–Even Mergesort
