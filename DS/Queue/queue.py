@@ -1,7 +1,70 @@
-class Node():
+class Node:
     def __init__(self, value):
         self.val = value
         self.next = None
+
+
+
+# class MyCircularQueue:
+
+#     def __init__(self, k: int):
+#         self.start = None
+#         self.end = None
+#         self.cap = k
+#         self.size = 0
+
+#     def inc_size(self):
+#         self.size += 1
+
+#     def dec_size(self):
+#         if self.size > 0:
+#             self.size -= 1
+
+#     def enQueue(self, value: int) -> bool:
+#         node = Node(value)
+#         if self.isFull():
+#             return False
+#         if self.start is None:
+#             self.start = node
+#             self.end = node
+#             node.next = node
+#         else:
+#             self.end.next = node
+#             self.end = node
+#             self.end.next = self.start
+
+#         self.inc_size()
+#         return True
+
+#     def deQueue(self) -> bool:
+#         if self.isEmpty():
+#             return False
+
+#         if self.size == 1:
+#             self.start = None
+#             self.end = None
+#         else:
+#             self.start = self.start.next
+#             self.end.next = self.start
+#         self.dec_size()
+
+#         return True
+
+#     def Front(self) -> int:
+#         if self.start:
+#             return self.start.val
+#         return -1
+
+#     def Rear(self) -> int:
+#         if not self.start:
+#             return -1
+#         return self.end.val
+
+#     def isEmpty(self) -> bool:
+#         return self.size == 0
+
+#     def isFull(self) -> bool:
+#         return self.size == self.cap
 
 class Queue():
     def __init__(self):

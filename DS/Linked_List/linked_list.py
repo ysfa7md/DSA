@@ -3,6 +3,96 @@ class Node:
         self.val=value
         self.next=None
 
+# class MyLinkedList:
+
+#     def __init__(self):
+#         self.head = None
+#         self.tail = None
+#         self.size = 0
+
+#     def go_to(self, index):
+#         ptr = self.head
+#         for i in range(index):
+#             ptr = ptr.next
+#         return ptr
+
+#     def get(self, index: int) -> int:
+#         if not self.head or index >= self.size or index < 0:
+#             return -1
+#         return self.go_to(index).val  # O(n) time
+
+#     def inc_size(self):
+#         self.size += 1
+
+#     def dec_size(self):
+#         if self.size < 1:
+#             return "list is empty"
+#         self.size -= 1
+
+#     def addAtHead(self, val: int) -> None:
+#         node = Node(val)
+
+#         if self.head is None:
+#             self.head = node
+#             self.tail = self.head
+#             self.inc_size()
+#             return
+
+#         node.next = self.head
+#         self.head = node
+#         self.inc_size()
+
+#     def addAtTail(self, val: int) -> None:
+#         node = Node(val)
+#         if not self.tail:
+#             self.tail = node
+#             self.head = self.tail
+#             self.inc_size()
+#             return
+
+#         self.tail.next = node
+#         self.tail = node
+#         self.inc_size()
+
+#     def addAtIndex(self, index: int, val: int) -> None:
+#         if index < 0 or index > self.size:
+#             return
+
+#         if not self.head:
+#             self.addAtHead(val)
+#             return
+
+#         if index == self.size:
+#             self.addAtTail(val)
+#             return
+
+#         node = Node(val)
+#         if index == 0:
+#             self.addAtHead(val)
+#             return
+
+#         ptr = self.go_to(index - 1)  # O(n) time
+
+#         ptr2 = ptr.next
+#         ptr.next = node
+#         node.next = ptr2
+
+#         self.inc_size()
+
+#     def deleteAtIndex(self, index: int) -> None:
+#         if not self.head or index >= self.size or index < 0:
+#             return
+
+#         if index == 0:
+#             self.head = self.head.next
+#             self.dec_size()
+#             return
+
+#         prev = self.go_to(index - 1)
+#         prev.next = prev.next.next
+#         if index == self.size - 1:
+#             self.tail = prev
+#         self.dec_size()
 
 class LinkedList():
     def __init__(self):

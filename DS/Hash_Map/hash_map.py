@@ -4,6 +4,9 @@ class HashMap:
         self.size = 0
         self.backits = [[] for _ in range(cap)]
 
+    def _hash(self, key):
+        return hash(key) % self.cap
+
     def put(self, key, value):
         idx = self._hash(key)
         backit = self.backits[idx]
@@ -68,9 +71,6 @@ class HashMap:
     def items(self):
         return [(k, v) for backit in self.backits for k, v in backit]
 
-    def _hash(self, key):
-        return hash(key) % self.cap
-
     def clear(self): ...
 
     def resize(self, new_capacity): ...
@@ -90,7 +90,7 @@ class HashMap:
 
 def main():
     hm = HashMap(32)
-    
+
     hm.put(4, 6)
     hm.put(5, 2)
     hm.put(3, 6)
